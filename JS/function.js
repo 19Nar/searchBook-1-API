@@ -31,6 +31,12 @@ const getResults = (searchData) => {
       let jsonData = JSON.parse(last)
       jsonData.forEach((book) => {
         console.log(book.volumeInfo.title)
+          
+    /*
+    Promise
+    async function run(){ return new Promise((resolve, reject)=>{ setTimeout(()=>
+    {console.log("blablabla"); resolve(); },2000); }); } (async ()=>{ await run(); })();
+    */
 
     searchResults.innerHTML = 
 
