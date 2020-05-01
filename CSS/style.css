@@ -7,6 +7,10 @@
     position: relative;
 }
 
+#results {
+    background-color: grey;
+}
+
 img {
     height: 200px;
 }
@@ -58,7 +62,7 @@ input, button
     width: 700px;
     padding: 35px;
     margin: -83px auto 0 auto;
-    background-color: #464040;
+    background-color:grey;
     border-radius: 20px;
     box-shadow: 0 10px 40px grey, 0 0 0 20px #ffffffeb;
     transform: scale(0.6);
@@ -79,7 +83,7 @@ input[type="text"]
 
 input[type="text"]::placeholder
 {
-    color: grey;
+    color:white;
 }
 
 #s-cover
