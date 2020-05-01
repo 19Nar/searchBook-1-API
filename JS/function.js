@@ -2,8 +2,9 @@ const form = document.querySelector("form");
 const myInput = document.querySelector("input");
 const searchBook = document.querySelector("button");
 const searchResults = document.querySelector("#results");
+let data;
 
-const book_URL= `https://www.googleapis.com/books/v1/volumes?q=${myInput}&callback=handleResponse`
+const book_URL= `https://www.googleapis.com/books/v1/volumes?q=${data}&callback=handleResponse`
 //const book_URL= `https://www.googleapis.com/books/v1/volumes?q=harry+potter&callback=handleResponse`
 
 
@@ -16,7 +17,8 @@ function formDone(e){
 };
 
 
-const getResults = () => {
+const getResults = (searchData) => {
+  data = searchData
     const url = book_URL
     //console.log(url);
 
@@ -25,28 +27,31 @@ const getResults = () => {
     .then(response => { return response.text()})
     .then(book=>{ return book.slice(89,)})
     .then(result=>{ return result.substr(0,result.length - 4)})
-    .then(book => {
+    .then(last => {
+      let jsonData = JSON.parse(last)
+      jsonData.forEach((book) => {
+        console.log(book.volumeInfo.title)
 
     searchResults.innerHTML = 
 
      `
-     <hr>
        <div class="container">
 <div class="row">
-  <div class="col-sm-4 bg-secondary p-2 text-white text-center">
-    <span id="text-center">Title: ${book.title} </span>
+  <div class="col-sm-4 p-2 text-white text-center">
+    <span id="text-center">Title: ${book.volumeInfo.title} </span>
   </div>
-  <div class="col-sm-2 bg-dark p-2 text-center text-white">
-    <span id="text-center">Author: ${book.authors}</span>
+  <div class="col-sm-2 p-2 text-center text-white">
+    <span id="text-center">Author: ${book.volumeInfo.authors}</span>
   </div>
-  <div class="col-sm-4 bg-secondary p-2 text-center text-white">
-    <span id="text-center">Publisher: ${book.publisher}</span>
+  <div class="col-sm-4 p-2 text-center text-white">
+    <span id="text-center">Publisher: ${book.volumeInfo.publisher}</span>
   </div>
-  <div class="col-sm-2 bg-dark p-2 text-center text-white">
-    <span id="text-center">Published Date: ${book.publishedDate}</span>
+  <div class="col-sm-2 p-2 text-center text-white">
+    <span id="text-center">Published Date: ${book.volumeInfo.publishedDate}</span>
   </div>
 </div>
 </div>
        `
     })
+  })
 };
