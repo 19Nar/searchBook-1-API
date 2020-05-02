@@ -1,63 +1,42 @@
-const form = document.querySelector("form");
-const myInput = document.querySelector("input");
-const searchBook = document.querySelector("button");
-const searchResults = document.querySelector("#results");
-let data;
+button.onclick = () => {
+  let book_URL = 'https://www.googleapis.com/books/v1/volumes?q=' + input.value;
+  console.log(book_URL)
 
-const book_URL= `https://www.googleapis.com/books/v1/volumes?q=${data}&callback=handleResponse`
-//const book_URL= `https://www.googleapis.com/books/v1/volumes?q=harry+potter&callback=handleResponse`
+  fetch(book_URL)
 
-
-form.addEventListener("submit", formDone);
-
-function formDone(e){
-    e.preventDefault();
-    bookInputValue = myInput.value;
-    getResults(bookInputValue);
+  .then(response => response.json())
+  .then(data => showBookResults(data.items));
 };
 
+  const showBookResults = (allResults) => {
 
-const getResults = (searchData) => {
-  data = searchData
-    const url = book_URL
-    //console.log(url);
+  results.innerHTML = "";
+  let html =""
+  allResults.forEach(book =>{
+    
+    console.log(book)
 
-    // turning to JSON
-    fetch(url)
-    .then(response => { return response.text()})
-    .then(book=>{ return book.slice(89,)})
-    .then(result=>{ return result.substr(0,result.length - 4)})
-    .then(last => {
-      let jsonData = JSON.parse(last)
-      jsonData.forEach((book) => {
-        console.log(book.volumeInfo.title)
-          
-    /*
-    Promise
-    async function run(){ return new Promise((resolve, reject)=>{ setTimeout(()=>
-    {console.log("blablabla"); resolve(); },2000); }); } (async ()=>{ await run(); })();
-    */
+    html += `
 
-    searchResults.innerHTML = 
-
-     `
+  <hr>
+  <br><br><br>
        <div class="container">
 <div class="row">
-  <div class="col-sm-4 p-2 text-white text-center">
-    <span id="text-center">Title: ${book.volumeInfo.title} </span>
+  <div class="col-sm-2 p-2 text-secondary text-center">
+    <span id="text-center">Language: ${book.volumeInfo.language}</span>
   </div>
-  <div class="col-sm-2 p-2 text-center text-white">
-    <span id="text-center">Author: ${book.volumeInfo.authors}</span>
+  <div class="col-sm-2 p-2 text-center text-secondary">
+    <span id="text-center">Title: ${book.volumeInfo.title}</span>
   </div>
-  <div class="col-sm-4 p-2 text-center text-white">
-    <span id="text-center">Publisher: ${book.volumeInfo.publisher}</span>
+  <div class="col-sm-4 p-2 text-center text-secondary">
+    <span id="text-center">Category: ${book.volumeInfo.categories} </span>
   </div>
-  <div class="col-sm-2 p-2 text-center text-white">
+  <div class="col-sm-4 p-2 text-center text-secondary">
     <span id="text-center">Published Date: ${book.volumeInfo.publishedDate}</span>
   </div>
 </div>
 </div>
        `
-    })
-  })
-};
+          })
+          results.innerHTML = html;
+      }
