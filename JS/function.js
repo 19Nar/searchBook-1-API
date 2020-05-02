@@ -4,16 +4,16 @@ button.onclick = () => {
 
   fetch(book_URL)
 
-  .then(response => response.json())
-  .then(data => showBookResults(data.items));
+    .then(response => response.json())
+    .then(data => showBookResults(data.items));
 };
 
-  const showBookResults = (allResults) => {
+const showBookResults = (allResults) => {
 
   results.innerHTML = "";
-  let html =""
-  allResults.forEach(book =>{
-    
+  let html = ""
+  allResults.forEach(book => {
+
     console.log(book)
 
     html += `
@@ -37,6 +37,6 @@ button.onclick = () => {
 </div>
 </div>
        `
-          })
-          results.innerHTML = html;
-      }
+  })
+  results.innerHTML = html;
+}
